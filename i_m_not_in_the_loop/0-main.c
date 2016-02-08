@@ -1,6 +1,7 @@
-#include <unistd.h>
+#include "my_functions.h"
 
-int print_char(char z)
+int main(void)
 {
-  return (write(1, &z, 1));
+  print_z();
+  return (0);
 }
