@@ -1,4 +1,4 @@
-#include "0-main.c"
+#include "my_functions.h"
 
 void print_z(void)
 {
