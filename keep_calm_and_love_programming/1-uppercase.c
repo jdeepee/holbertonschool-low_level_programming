@@ -1,4 +1,4 @@
-#include "print_char.c"
+#include "my_functions.h"
 
 char uppercase(char c)
 {

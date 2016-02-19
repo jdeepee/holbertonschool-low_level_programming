@@ -1,16 +1,21 @@
-#include "print_char.c"
+#include "my_functions.h"
 
 void print_last_digit(int n)
 {
+	char c;
+
 	if (n > 0)
 	{
 		n=n%10;
-		print_char(n);
+		c=n+'0';
+		print_char(c);
 	} else if (n < 0){
 		n=n*-1%10;
-		print_char(n);
+		c=n+'0';
+		print_char(c);
 	} else {
-		print_char(n);
+		c=n+'0';
+		print_char(c);
 	}
 
 }
