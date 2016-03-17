@@ -7,7 +7,7 @@ void print_line(int n){
 		print_char('\n');
 	} else{
 		while(i<n){
-			print_char('_');
+			print_char('_'); /*printing underscore when i < n */
 			i++;
 		}
 
