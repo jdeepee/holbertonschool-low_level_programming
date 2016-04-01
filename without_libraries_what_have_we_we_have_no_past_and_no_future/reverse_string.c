@@ -9,9 +9,9 @@ void reverse_string(char *s){
 	}
 
 	char *left;
-	*left = &s[0];
+	left = &s[0];
 	char *right;
-	*right = &s[length-1];
+	right = &s[length-1];
 	for(; left<right ; left++, right--)
 	{
 		c = *left;
