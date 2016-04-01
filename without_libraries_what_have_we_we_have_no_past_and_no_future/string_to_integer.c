@@ -22,7 +22,7 @@ int string_to_integer(char *s){
 				return (0);
 			}
 			if( nc < 47 || nc > 58){
-				break; //Not a number
+				break;
 			}
 			on *= 10;
 		}
