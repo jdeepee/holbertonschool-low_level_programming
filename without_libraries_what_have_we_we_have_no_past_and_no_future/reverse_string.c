@@ -8,8 +8,10 @@ void reverse_string(char *s){
 		loop++;
 	}
 
-	char *left = &s[0];
-	char *right = &s[length-1];
+	char *left;
+	*left = &s[0];
+	char *right;
+	*right = &s[length-1];
 	for(; left<right ; left++, right--)
 	{
 		c = *left;
