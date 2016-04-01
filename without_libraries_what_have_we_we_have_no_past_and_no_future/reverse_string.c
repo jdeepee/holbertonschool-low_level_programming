@@ -1,2 +1,2 @@
-void reverse_string(char *s){
+void reverse_string(){
 }
