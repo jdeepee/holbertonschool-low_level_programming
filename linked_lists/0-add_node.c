@@ -1,17 +1,19 @@
 #include <stdlib.h>
 #include "list.h"
 
-char *string_copy(char *dest, const char *src){
-	int i=0;
-	
-	while (*src != '\0'){
-		*dest = *src;
-		src++;
-		dest++;
-		i++;
-	}
-	*dest = '\0';
-	return &(dest[-i]);
+void string_copy(char *src, char *dest) { /* function to copy a string */
+  char *x;
+  
+  while (*src != 0) {
+    *dest = *src;
+    src++;
+    dest++;
+  }
+  *dest = 0; /* reset */
+
+  x  = src;
+  x = dest;
+  src = x + 1;
 }
 
 int len(char *s)
@@ -42,7 +44,8 @@ int add_node(List **list, char *str){
 		return(1);
 	}
 
-	node->str = str_dup(str);
+	node->str = malloc(sizeof(char) * len(str));
+  	string_copy(str, node->str); /*add to start of list */
 	node->next = *list;
 	*list = node;
 	return (0);
