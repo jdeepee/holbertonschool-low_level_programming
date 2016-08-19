@@ -3,13 +3,15 @@
 
 void btree_free(BTree *tree)
 {
-	if (!tree){
+	if (tree == NULL){
 		return;
-	}
-	if (tree->str){
-		free(tree->str);
 	}
 	btree_free(tree->left);
 	btree_free(tree->right);
+
+	if (tree->str != NULL){
+		free(tree->str);
+	}
+	
 	free(tree);
 }

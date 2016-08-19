@@ -3,26 +3,25 @@
 
 BTree *find_tree_recursion(BTree *tree, char *str)
 {
-	int c;
+	int compare;
+	compare = strcmp(str, tree->str);
 
-	if (!tree){
-		return NULL;
-	}
-	c = strcmp(str, tree->str);
-	if (c == 0){
-		return tree;
-	}
-	else if (c < 0){
+	if (compare < 0){
 		return find_tree_recursion(tree->left, str);
-	}
-	else{
+	} 
+	if (compare > 0){
 		return find_tree_recursion(tree->right, str);
+	}
+
+	if (compare == 0){
+		return tree;
 	}
 }
 
 BTree *btree_find(BTree *tree, char *str)
 {
-	if (!tree || !str)
+	if (tree == NULL || str == NULL){
 		return NULL;
+	}
 	return find_tree_recursion(tree, str);
 }
