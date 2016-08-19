@@ -1,36 +1,29 @@
 #include "hashtable.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 void ht_free(HashTable *hashtable)
 {
   unsigned int i;
-  List *tmp;
-  List *tmp2;
+  List *list;
+  List *temp;
 
   i = 0;
-  while (i < hashtable->size) {
-    tmp = hashtable->array[i];
+  for (;i < hashtable->size; i++) {
+    list = hashtable->array[i];
     /* if element of array is empty, do nothing */
-    if (tmp == NULL) {
+    if (list == NULL) {
     } else {
-      while (tmp->next != NULL) {
+      while (list->next != NULL) {
       	/* goes through linked list and frees all parts */
-      	tmp2 = tmp->next;
-      	free(tmp->key);
-      	free(tmp->value);
-      	free(tmp);
-      	tmp = tmp2;
-      }
-      if (tmp->next == NULL) {
-      	/* frees last node in linked list or if there's only single node */
-      	free(tmp->key);
-      	free(tmp->value);
-      	free(tmp);
+      	free(list->key);
+      	free(list->value);
+      	temp = list;
+        list = list->next;
+        free(temp);
       }
     }
-    i++;
   }
   free(hashtable->array);
   free(hashtable);
+  return;
 }

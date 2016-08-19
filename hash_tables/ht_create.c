@@ -1,29 +1,28 @@
 #include "hashtable.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 HashTable *ht_create(unsigned int size)
 {
-  HashTable *ht;
   unsigned int i;
+  HashTable *new_ht;
   
-  ht = NULL;
-  ht = malloc(sizeof(HashTable));
+  new_ht = malloc(sizeof(HashTable));
+  /* Allocation space for array */
+  new_ht->array = malloc(sizeof(List *) * size);
+  new_ht->size = size;
 
-  if (ht == NULL) {
+  if (new_ht == NULL) {
+    return NULL;
+  }
+  if (new_ht->array == NULL) {
     return NULL;
   }
 
-  ht->array = malloc(sizeof(List *) * size);
-  if (ht->array == NULL) {
-    return NULL;
-  }
-
-  for (i = 0; i < size; i++) {
-    ht->array[i] = NULL;
+  i = 0;
+  while (i < size) {
+    new_ht->array[i] = NULL;
+    i++;
   }
   
-  ht->size = size;
-  
-  return ht;
+  return new_ht;
 }
