@@ -1,94 +1,105 @@
 #include <stdlib.h>
 #include "list.h"
 
-void string_copy6(char *src, char *dest) { /* function to copy a string */
-  char *x;
+int list_size_2(List *list){  
+  int i;
+  i=1; /* Starting at the first node */
+
+  /* See if list actually has a value */
+  if (list == NULL){
+    return 1;
+  }
+
+  List *list_dup;
+  list_dup = list;
+
+  /* Go through every node in list whilst incrementing i each time to count how many nodes we pass */
+  while (list_dup->next != NULL){
+    list_dup = list_dup->next;
+    i++;
+  }
+
+  return i;
+}
+
+char *string_dup_2(char *str) {
+  char *copystr = str;
+  int strln = 0;
+  while (*copystr != 0) {
+    copystr++;
+    strln++; /* Getting the length */
+  }
+  char *ret;
+  char *retc;
+  ret = malloc(sizeof(char) * (strln+1));
+
+  if (ret == NULL) return ret; /* Failed to allocate the memory. */
+
+  retc = ret;
+  copystr = str;
+  while (*copystr != 0) {
+    *retc = *copystr;
+    retc++;
+    copystr++;
+  }
+  *retc=0;
   
-  while (*src != 0) {
-    *dest = *src;
-    src++;
-    dest++;
-  }
-  *dest = 0; /* reset */
-
-  x  = src;
-  x = dest;
-  src = x + 1;
+  return ret; /* return 'holberton' (*str ) */
 }
 
-int len6(char *s)
-{
-    int count=0;
-    while(*s != '\0')
-    {
-        count++;
-        s++;
-    }
-    return(count);
-}
-
-int add_node6(List **list, char *str){
+int add_node_2(List **list, char *content){
   List *node;
+  node = malloc(sizeof(List));
 
-  node = malloc(sizeof(list));
-  if (node == NULL){
-    return (1);
+  if (node == NULL) {
+    return 1; /* failed to allocate */
   }
 
-  node->str = malloc(sizeof(char) * len6(str));;
+  node->str = string_dup_2(content);
+  /* fill node string with copy of parameter string */
   node->next = NULL;
-  string_copy6(str, node->str); /*add to start of list */
+  /* Next node is NULL because it is being inserted at the end of the list */
 
   if (*list == NULL){
-    *list = node;
+    *list = node; /* if the list is Null then it will be equal to the new node */
   } else {
-    (*list)->next = node;
+    List *search;
+    search = *list;
+
+    /* Begin to search for end of the linked list */
+    while (search->next != NULL){
+      search = search->next;
+    }
+    /* Assign second to last node's next value to new node which was inserted at the end of the list */
+    search->next = node;
   }
+
   return 0;
 }
 
-
-int list_size6(List *list) { /* returns the number of node in a list */
-  int count = 1;
-
-  if (list == NULL) { /* if no nodes */
-    return 0;
-  }
-
-  while (list->next != NULL) {
-    list = list->next;
-    count++;
-  }
-  return count;
-}
-
-
-int insert_in_list(List **list, char *content, int index) {
-  int pos = 0;
-  List *ptr = *list;
-  List *tmp;
-  if (index < 0){ 
+int insert_in_list(List **list, char *content, int index){
+  /*checking if index is within length of linked list */
+  if (index < 0 || list_size_2(*list) <= index){
     return 1;
   }
-  if (list_size6(*list) <= index){
-    return 1;
+
+  List *node;
+  List *temp_node;
+
+  node = malloc(sizeof(node));
+  node->str = string_dup_2(content);
+  temp_node = *list;
+
+  if (index > list_size_2(*list)){
+    add_node_2(list, content);
   }
-  if (index == 0){ 
-    return add_node6(list, content);
+  
+  /* go through nodes until we reach the end of index meaning we are at the place the node should be inserted */
+  while (index > 1) {
+    index --;
+    temp_node = temp_node->next;
   }
-
-  while (pos < index-2) {
-    pos++;
-    ptr = ptr->next;
-  }
-  tmp = ptr->next;
-
-  ptr->next = malloc(sizeof(List));
-  if (ptr->next == NULL) return 1;
-
-  ptr->next->next = tmp;
-
-  ptr->next->str = malloc(sizeof(char) * len6(content));
-  string_copy6(content, ptr->next->str);
+  node->next = temp_node->next;
+  temp_node->next = node;
   return 0;
 }

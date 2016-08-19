@@ -1,4 +1,3 @@
-
 #include "list.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -13,22 +12,29 @@ void print_string(char *str) {
 }
 
 void print_list(List *list) {
-  int x = 1;
-
-  if (list == NULL) {
+  /*Checking to see if list is NULL if NULL, just print a empty line */
+  if (list == NULL){
     print_char('\n');
-    return; /* no node just return empty row */
   }
 
-  do {
-    if (!x) {
-      print_char(',');
-      print_char(' ');
-    } else {
-      x = 0;
-    }
-    print_string(list->str); /* print the string */
-    list = list->next;
-  } while (list != NULL);
-  print_char('\n');
+  List *temp;
+  temp = list;
+  /* While there is still a next node in the list */
+  while(temp->next != NULL){
+    /*Print the string of the current node */
+    print_string(temp->str);
+    print_char(',');
+    print_char(' ');
+    /*Assign temp to the next node in the list */
+    temp = temp->next;
+  }
+
+  /* Checking to see if it is the last node */
+  if(temp->next == NULL){
+    /* Printing string of last node */
+    print_string(temp->str);
+    print_char('\n');
+  }
 }
+
+

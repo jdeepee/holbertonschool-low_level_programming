@@ -1,42 +1,34 @@
 #include <stdlib.h>
 #include "list.h"
 
-void free_node2(List *node) { /* free a node */
-  free(node->str);
-  free(node);
+void free_node(List *list);
+
+void remove_from_list(List **list, int index){
+  List *before_node;
+  List *target_node;
+  before_node = *list;
+  target_node = *list;
+
+  int index_dup;
+  index_dup = index - 1;
+
+  /* Finding node which we will delete and assigning it to target_node */
+  for(; index > 0; index--){
+    target_node = target_node->next;
+  }
+
+  /*finding node before node to delete so we can link list back together after deleting target node */
+  for(; index_dup > 0; index_dup--){
+    before_node = before_node->next;
+  }
+
+  before_node->next = target_node->next;
+
+  free_node(target_node);
+} 
+
+void free_node(List *list){
+  free(list->str);
+  free(list);
 }
 
-int list_size3(List *list) { /* function that returns the number of node in a list */
-  int count = 1;
-
-  if (list == NULL) {
-    return 0;
-  }
-  while (list->next != NULL) {
-    list = list->next;
-    count++;
-  }
-  return count;
-}
-
-void remove_from_list(List **list, int index) { /*  function that removes and frees a node from a list */
-  int pos = 0;
-  List *ptr = *list; 
-  List *tmp;
-
-  if (index < 0) return;
-  if (list_size3(*list) <= index) return;
-  if (index == 0) {
-    *list = (*list)->next; 
-    return;
-  }
-
-  while (pos < index-2) {
-    pos++;
-    ptr = ptr->next;
-  }
-
-  tmp = ptr->next->next;
-  free_node2(ptr->next); 
-  ptr->next = tmp;
-}

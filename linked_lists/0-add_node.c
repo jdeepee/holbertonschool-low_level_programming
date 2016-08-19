@@ -1,52 +1,43 @@
 #include <stdlib.h>
 #include "list.h"
 
-void string_copy(char *src, char *dest) { /* function to copy a string */
-  char *x;
-  
-  while (*src != 0) {
-    *dest = *src;
-    src++;
-    dest++;
+char *string_dup(char *str) {
+  char *copystr = str;
+  int strln = 0;
+  while (*copystr != 0) {
+    copystr++;
+    strln++; /* Getting the length */
   }
-  *dest = 0; /* reset */
+  char *ret;
+  char *retc;
+  ret = malloc(sizeof(char) * (strln+1));
 
-  x  = src;
-  x = dest;
-  src = x + 1;
-}
+  if (ret == NULL) return ret; /* Failed to allocate the memory. */
 
-int len(char *s)
-{
-    int count=0;
-    while(*s != '\0')
-    {
-        count++;
-        s++;
-    }
-    return(count);
-}
-
-char *str_dup(char *s){
-	char *d = malloc(len(s) + 1);
-	if (d == NULL) {
-		return NULL;
-	}
-	string_copy(d,s);                       
-	return d;                          
+  retc = ret;
+  copystr = str;
+  while (*copystr != 0) {
+    *retc = *copystr;
+    retc++;
+    copystr++;
+  }
+  *retc=0;
+  
+  return ret; /* return 'holberton' (*str ) */
 }
 
 int add_node(List **list, char *str){
-	List *node;
+  List *node;
+  node = malloc(sizeof(List));
 
-	node = malloc(sizeof(list));
-	if (node == NULL){
-		return(1);
-	}
+  if (node == NULL) {
+    return 1;
+  }
 
-	node->str = malloc(sizeof(char) * len(str));
-  	string_copy(str, node->str); /*add to start of list */
-	node->next = *list;
-	*list = node;
-	return (0);
+  node->str = string_dup(str);
+  node->next = *list;
+
+  *list = node;
+
+  return 0;
 }

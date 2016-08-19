@@ -2,19 +2,24 @@
 #include <stdlib.h>
 
 void rev_list(List **list){
-  List *low = *list;
-  List *next;
-  List *main;
-
-  next = low->next; /* store */
-  low->next = NULL;
- 
-  while (next != NULL) { /* add to next */
-    main = next;
-    next = main->next;
-    main->next = low;
-    low = main;
+  if (list == NULL){
+    return;
   }
-  *list = low; 
 
+  List *node;
+  List *next_node;
+  List *prev_node;
+
+  node = *list;
+  next_node = node->next;
+  node->next = NULL;
+
+  while(next_node != NULL){
+    prev_node = node;
+    node = next_node;
+    next_node = node->next;
+    node->next = prev_node;
+    prev_node = node;
+  }
+  *list = node;
 }

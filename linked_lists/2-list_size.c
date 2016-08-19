@@ -1,16 +1,23 @@
 #include "list.h"
 #include <stdlib.h>
 
-int list_size(List *list) { /* returns the number of node in a list */
-  int count = 1;
+int list_size(List *list){  
+	int i;
+	i=1; /* Starting at the first node */
 
-  if (list == NULL) { /* if no nodes */
-  	return 0;
-  }
+	/* See if list actually has a value */
+	if (list == NULL){
+		return 1;
+	}
 
-  while (list->next != NULL) {
-    list = list->next;
-    count++;
-  }
-  return count;
+	List *list_dup;
+	list_dup = list;
+
+	/* Go through every node in list whilst incrementing i each time to count how many nodes we pass */
+	while (list_dup->next != NULL){
+		list_dup = list_dup->next;
+		i++;
+	}
+
+	return i;
 }
